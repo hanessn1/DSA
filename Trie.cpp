@@ -1,68 +1,53 @@
 #include <bits/stdc++.h>
-#define ll long long int
 using namespace std;
-struct TrieNode{
-    TrieNode *links[26];
-    bool flag=false;
+class TrieNode{
+    public:
+    bool isEndOfWord;
+    TrieNode *children[26];
 
-    bool containsKey(char ch){
-        return links[ch-'a']!=NULL;
-    }
-    void put(char ch,TrieNode *node){
-        links[ch-'a']=node;
-    }
-    TrieNode* get(char ch){
-        return links[ch-'a'];
-    }
-    void setEnd(){
-        flag=true;
-    }
-    bool isEnd(){
-        return flag==true;
+    TrieNode(){
+        isEndOfWord=false;
+        for(int i=0;i<26;i++){
+            this->children[i]=NULL;
+        }
     }
 };
-
 class Trie{
-    private:
     TrieNode *root;
-
-    public:
-    Trie(){
+    Trie() {
         root=new TrieNode();
     }
-    void insert(string word){
-        TrieNode *node=root;
+    
+    void insert(string word) {
+        TrieNode *crawl=root;
         for(int i=0;i<word.size();i++){
-            if(node->containsKey(word[i])){
-                node=node->get(word[i]);
-            }else{
-                node->put(word[i],new TrieNode());
-                node=node->get(word[i]);
+            int idx=word[i]-'a';
+            if(crawl->children[idx]==NULL){
+                crawl->children[idx]=new TrieNode();
             }
+            crawl=crawl->children[idx];
         }
-        node->setEnd();
+        crawl->isEndOfWord=true;
     }
-    bool search(string word){
-        TrieNode *node=root;
+    
+    bool search(string word) {
+        TrieNode *crawl=root;
         for(int i=0;i<word.size();i++){
-            if(node->containsKey(word[i])){
-                node=node->get(word[i]);
-            }else{
-                return false;
-            }
+            int idx=word[i]-'a';
+            if(crawl->children[idx]==NULL) return 0;
+            crawl=crawl->children[idx];
         }
-        return node->isEnd();
+        return crawl->isEndOfWord==true;
     }
-    bool startsWith(string word){
-        TrieNode *node=root;
-        for(int i=0;i<word.size();i++){
-            if(node->containsKey(word[i])){
-                node=node->get(word[i]);
-            }else{
-                return false;
-            }
+    
+    bool startsWith(string prefix) {
+        TrieNode *crawl=root;
+        for(int i=0;i<prefix.size();i++){
+            int idx=prefix[i]-'a';
+            if(crawl->children[idx]==NULL) return 0;
+            crawl=crawl->children[idx];
         }
-        return true;
+        return 1;
     }
 };
 int main(){

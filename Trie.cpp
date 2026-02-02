@@ -37,7 +37,7 @@ class Trie{
             if(crawl->children[idx]==NULL) return 0;
             crawl=crawl->children[idx];
         }
-        return crawl->isEndOfWord==true;
+        return crawl!=NULL && crawl->isEndOfWord==true;
     }
     
     bool startsWith(string prefix) {

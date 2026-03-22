@@ -28,10 +28,7 @@ int main()
 {
     int n,i;
     cin>>n;
-    // int a[n];
     int a[]={2,4,5,7,8,7,5,4,2,2,5};
-    // for(i=0;i<n;i++)
-    //     cin>>a[i];
     display(a,11);
     bubbleSort(a,11);
     display(a,11);

@@ -21,7 +21,7 @@ void heapify(int a[],int n,int idx)
 }
 void heapSort(int a[],int n)
 {
-    for(int i=n/2-1;i>=0;i--)
+    for(int i=n-1;i>=0;i--)
         heapify(a,n,i);
     display(a,10);
     for(int i=n-1;i>0;i--)
